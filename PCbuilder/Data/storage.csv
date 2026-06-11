@@ -1,0 +1,5 @@
+Id,Name,Manufacturer,Price,CapacityGB,Interface
+1,Samsung 970 EVO,Samsung,6000,1000,NVMe
+2,WD Blue SN570,WD,4500,500,NVMe
+3,Kingston A400,Kingston,3000,480,SATA
+4,Seagate Barracuda,Seagate,4000,2000,SATA
