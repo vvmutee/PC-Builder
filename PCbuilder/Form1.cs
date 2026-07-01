@@ -20,6 +20,7 @@ namespace PCbuilder
         private List<PSU> _psus;
         private List<Case> _cases;
         private List<Component> _allComponents;
+        private List<PCBuild> _savedBuilds;
 
         public Form1()
         {
@@ -37,6 +38,20 @@ namespace PCbuilder
             cmbStorage.SelectedIndexChanged += (s, e) => UpdateTotalPrice();
             cmbPSU.SelectedIndexChanged += (s, e) => UpdateTotalPrice();
             cmbCase.SelectedIndexChanged += (s, e) => UpdateTotalPrice();
+
+            // Каталог обновляется автоматически: смена типа, ввод в поиск, смена фильтра цены
+            cmbComponentType.SelectedIndexChanged += (s, e) => ShowCatalog();
+            txtSearch.TextChanged += (s, e) => ShowCatalog();
+            cmbFilterType.SelectedIndexChanged += (s, e) => ShowCatalog();
+
+            ShowCatalog();
+
+            // Анализ сборок: подгружаем при старте и при каждом открытии вкладки
+            LoadBuildsAnalysis();
+            tabControl1.SelectedIndexChanged += (s, e) =>
+            {
+                if (tabControl1.SelectedTab == tabPageBuilds) LoadBuildsAnalysis();
+            };
         }
 
         private void InitializeComboBox()
@@ -69,9 +84,6 @@ namespace PCbuilder
                 _allComponents.AddRange(_storages);
                 _allComponents.AddRange(_psus);
                 _allComponents.AddRange(_cases);
-
-                statusStrip1.Items.Clear();
-                statusStrip1.Items.Add($"✅ Загружено: CPU={_cpus.Count}, GPU={_gpus.Count}, MB={_motherboards.Count}, RAM={_rams.Count}, Storage={_storages.Count}, PSU={_psus.Count}, Case={_cases.Count}");
             }
             catch (Exception ex)
             {
@@ -80,23 +92,24 @@ namespace PCbuilder
             }
         }
 
-        private void btnLoad_Click(object sender, EventArgs e)
+        // Показывает каталог с учётом выбранного типа, текста поиска и фильтра по цене.
+        // Вызывается автоматически при любом изменении этих полей.
+        private void ShowCatalog()
         {
-            if (cmbComponentType.SelectedIndex == -1) return;
+            if (_allComponents == null || cmbComponentType.SelectedIndex == -1) return;
 
-            string selectedType = cmbComponentType.SelectedItem.ToString();
+            List<Component> filtered = GetSelectedComponents();
+
+            string searchText = txtSearch.Text.Trim().ToLower();
+            if (!string.IsNullOrEmpty(searchText))
+                filtered = filtered.Where(c => c.Name.ToLower().Contains(searchText)).ToList();
+
+            string filterType = cmbFilterType.SelectedItem?.ToString() ?? "Все";
+            filtered = ApplyPriceFilter(filtered, filterType);
+
             dgvCatalog.DataSource = null;
-
-            switch (selectedType)
-            {
-                case "Процессоры": dgvCatalog.DataSource = _cpus; break;
-                case "Видеокарты": dgvCatalog.DataSource = _gpus; break;
-                case "Материнские платы": dgvCatalog.DataSource = _motherboards; break;
-                case "Оперативная память": dgvCatalog.DataSource = _rams; break;
-                case "Накопители": dgvCatalog.DataSource = _storages; break;
-                case "Блоки питания": dgvCatalog.DataSource = _psus; break;
-                case "Корпуса": dgvCatalog.DataSource = _cases; break;
-            }
+            dgvCatalog.DataSource = filtered;
+            dgvCatalog.ClearSelection();
         }
 
         private void PopulateBuildComboBoxes()
@@ -141,10 +154,18 @@ namespace PCbuilder
             if (cmbPSU.SelectedIndex > 0) total += _psus[cmbPSU.SelectedIndex - 1].Price;
             if (cmbCase.SelectedIndex > 0) total += _cases[cmbCase.SelectedIndex - 1].Price;
             lblTotalPriceValue.Text = $"{total:N0} ₽";
+
+            // Состав сборки изменился — старый результат проверки больше не актуален
+            ResetCompatibilityHighlight();
+            lblCompatibilityStatus.Text = "";
         }
+
+        // Цвет подсветки несовместимых полей
+        private static readonly System.Drawing.Color IncompatibleColor = System.Drawing.Color.FromArgb(255, 205, 210);
 
         private void btnCheckCompatibility_Click(object sender, EventArgs e)
         {
+            ResetCompatibilityHighlight();
             var errors = new List<string>();
 
             if (cmbCPU.SelectedIndex == 0) errors.Add("❌ Не выбран процессор");
@@ -167,10 +188,18 @@ namespace PCbuilder
             var c = _cases[cmbCase.SelectedIndex - 1];
 
             if (cpu.Socket != mb.Socket)
+            {
                 errors.Add($"❌ Несовместимость сокетов: CPU ({cpu.Socket}) ≠ Мат. плата ({mb.Socket})");
+                cmbCPU.BackColor = IncompatibleColor;
+                cmbMotherboard.BackColor = IncompatibleColor;
+            }
 
             if (mb.FormFactor != c.FormFactor)
+            {
                 errors.Add($"❌ Несовместимость форм-факторов: Мат. плата ({mb.FormFactor}) ≠ Корпус ({c.FormFactor})");
+                cmbMotherboard.BackColor = IncompatibleColor;
+                cmbCase.BackColor = IncompatibleColor;
+            }
 
             if (errors.Count == 0)
             {
@@ -182,6 +211,18 @@ namespace PCbuilder
                 lblCompatibilityStatus.Text = string.Join("\n", errors);
                 lblCompatibilityStatus.ForeColor = System.Drawing.Color.Red;
             }
+        }
+
+        // Сбрасывает подсветку всех полей сборки к обычному виду
+        private void ResetCompatibilityHighlight()
+        {
+            cmbCPU.BackColor = System.Drawing.Color.White;
+            cmbGPU.BackColor = System.Drawing.Color.White;
+            cmbMotherboard.BackColor = System.Drawing.Color.White;
+            cmbRAM.BackColor = System.Drawing.Color.White;
+            cmbStorage.BackColor = System.Drawing.Color.White;
+            cmbPSU.BackColor = System.Drawing.Color.White;
+            cmbCase.BackColor = System.Drawing.Color.White;
         }
 
         private void btnSaveBuild_Click(object sender, EventArgs e)
@@ -229,11 +270,9 @@ namespace PCbuilder
             if (_allComponents == null || _allComponents.Count == 0) return;
 
             var allPrices = _allComponents.Select(c => c.Price).ToList();
-            decimal avgPrice = allPrices.Average();
             decimal minPrice = allPrices.Min();
             decimal maxPrice = allPrices.Max();
 
-            lblAvgPrice.Text = $"💰 Средняя цена по всем: {avgPrice:N0} ₽";
             lblMinPrice.Text = $" Минимальная цена: {minPrice:N0} ₽";
             lblMaxPrice.Text = $" Максимальная цена: {maxPrice:N0} ₽";
             lblTotalItems.Text = $" Всего компонентов: {_allComponents.Count}";
@@ -249,24 +288,31 @@ namespace PCbuilder
 
         private void BuildCharts()
         {
-            // График 1: Средняя цена по категориям (столбчатая диаграмма)
+            // График 1: Минимальная и максимальная цена по категориям (двойная столбчатая диаграмма)
             chartPriceByCategory.Series.Clear();
             chartPriceByCategory.Titles.Clear();
-            chartPriceByCategory.Titles.Add("Средняя цена по категориям (₽)");
+            chartPriceByCategory.Titles.Add("Минимальная и максимальная цена по категориям (₽)");
 
-            var series1 = new Series("Средняя цена");
-            series1.ChartType = SeriesChartType.Column;
-            series1.Color = System.Drawing.Color.FromArgb(66, 133, 244);
+            var seriesMin = new Series("Минимальная");
+            seriesMin.ChartType = SeriesChartType.Column;
+            seriesMin.Color = System.Drawing.Color.FromArgb(52, 168, 83);
 
-            series1.Points.AddXY("CPU", _cpus.Any() ? _cpus.Average(c => c.Price) : 0);
-            series1.Points.AddXY("GPU", _gpus.Any() ? _gpus.Average(c => c.Price) : 0);
-            series1.Points.AddXY("Мат.плата", _motherboards.Any() ? _motherboards.Average(c => c.Price) : 0);
-            series1.Points.AddXY("RAM", _rams.Any() ? _rams.Average(c => c.Price) : 0);
-            series1.Points.AddXY("Накопитель", _storages.Any() ? _storages.Average(c => c.Price) : 0);
-            series1.Points.AddXY("БП", _psus.Any() ? _psus.Average(c => c.Price) : 0);
-            series1.Points.AddXY("Корпус", _cases.Any() ? _cases.Average(c => c.Price) : 0);
+            var seriesMax = new Series("Максимальная");
+            seriesMax.ChartType = SeriesChartType.Column;
+            seriesMax.Color = System.Drawing.Color.FromArgb(234, 67, 53);
 
-            chartPriceByCategory.Series.Add(series1);
+            AddMinMaxPoints(seriesMin, seriesMax, "CPU", _cpus.Select(c => c.Price));
+            AddMinMaxPoints(seriesMin, seriesMax, "GPU", _gpus.Select(c => c.Price));
+            AddMinMaxPoints(seriesMin, seriesMax, "Мат.плата", _motherboards.Select(c => c.Price));
+            AddMinMaxPoints(seriesMin, seriesMax, "RAM", _rams.Select(c => c.Price));
+            AddMinMaxPoints(seriesMin, seriesMax, "Накопитель", _storages.Select(c => c.Price));
+            AddMinMaxPoints(seriesMin, seriesMax, "БП", _psus.Select(c => c.Price));
+            AddMinMaxPoints(seriesMin, seriesMax, "Корпус", _cases.Select(c => c.Price));
+
+            chartPriceByCategory.Series.Add(seriesMin);
+            chartPriceByCategory.Series.Add(seriesMax);
+            chartPriceByCategory.Legends.Clear();
+            chartPriceByCategory.Legends.Add(new Legend("Legend1"));
             chartPriceByCategory.ChartAreas.Clear();
             var area1 = new ChartArea();
             area1.AxisX.Title = "Категория";
@@ -307,6 +353,14 @@ namespace PCbuilder
             chartDistribution.ChartAreas.Add(area2);
         }
 
+        // Добавляет в две серии точки минимальной и максимальной цены для одной категории
+        private void AddMinMaxPoints(Series seriesMin, Series seriesMax, string category, IEnumerable<decimal> prices)
+        {
+            var list = prices.ToList();
+            seriesMin.Points.AddXY(category, list.Any() ? list.Min() : 0);
+            seriesMax.Points.AddXY(category, list.Any() ? list.Max() : 0);
+        }
+
         private void btnRefreshStats_Click(object sender, EventArgs e)
         {
             CalculateStatistics();
@@ -315,44 +369,38 @@ namespace PCbuilder
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // === АНАЛИЗ СБОРОК ===
+
+        // Читает сохранённые сборки из папки Builds и наполняет обе таблицы (сборки и популярность)
+        private void LoadBuildsAnalysis()
+        {
+            _savedBuilds = BuildAnalysisService.LoadBuilds();
+
+            dgvBuilds.DataSource = null;
+            dgvBuilds.DataSource = BuildAnalysisService.GetSummaries(_savedBuilds);
+            dgvBuilds.ClearSelection();
+
+            dgvPopularity.DataSource = null;
+            dgvPopularity.DataSource = BuildAnalysisService.GetPopularity(_savedBuilds);
+            dgvPopularity.ClearSelection();
+
+            lblBuildsTitle.Text = $"🛠 Анализ сохранённых сборок (всего: {_savedBuilds.Count})";
+        }
+
+        // Переключение между таблицей сборок и статистикой популярности
+        private void BuildsView_Changed(object sender, EventArgs e)
+        {
+            bool showTable = rbBuildsTable.Checked;
+            dgvBuilds.Visible = showTable;
+            dgvPopularity.Visible = !showTable;
+        }
+
+        private void btnRefreshBuilds_Click(object sender, EventArgs e)
+        {
+            LoadBuildsAnalysis();
+        }
+
         // === ПОИСК И ФИЛЬТРАЦИЯ ===
-
-        private void btnApplyFilter_Click(object sender, EventArgs e)
-        {
-            string searchText = txtSearch.Text.Trim().ToLower();
-            string filterType = cmbFilterType.SelectedItem?.ToString() ?? "Все";
-
-            if (cmbComponentType.SelectedIndex == -1)
-            {
-                MessageBox.Show("Сначала выберите тип компонента!", "Внимание",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            List<Component> filtered = GetSelectedComponents();
-
-            // Фильтр по названию
-            if (!string.IsNullOrEmpty(searchText))
-            {
-                filtered = filtered.Where(c => c.Name.ToLower().Contains(searchText)).ToList();
-            }
-
-            // Фильтр по цене
-            filtered = ApplyPriceFilter(filtered, filterType);
-
-            dgvCatalog.DataSource = null;
-            dgvCatalog.DataSource = filtered;
-
-            MessageBox.Show($"Найдено компонентов: {filtered.Count}", "Результат фильтрации",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void btnResetFilter_Click(object sender, EventArgs e)
-        {
-            txtSearch.Clear();
-            cmbFilterType.SelectedIndex = 0;
-            btnLoad_Click(sender, e);
-        }
 
         private List<Component> GetSelectedComponents()
         {
@@ -381,25 +429,5 @@ namespace PCbuilder
                 default: return list;
             }
         }
-        // Обработчики для поискового поля
-        private void txtSearch_Enter(object sender, EventArgs e)
-        {
-            if (txtSearch.Text == "Введите название...")
-            {
-                txtSearch.Text = "";
-                txtSearch.ForeColor = System.Drawing.Color.Black;
-            }
-        }
-
-        private void txtSearch_Leave(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtSearch.Text))
-            {
-                txtSearch.Text = "Введите название...";
-                txtSearch.ForeColor = System.Drawing.Color.Gray;
-            }
-        }
-        // Обработчики для поискового поля
-        
     }
 }

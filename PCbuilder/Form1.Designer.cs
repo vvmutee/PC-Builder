@@ -19,10 +19,15 @@
             this.tabPageCatalog = new System.Windows.Forms.TabPage();
             this.tabPageBuild = new System.Windows.Forms.TabPage();
             this.tabPageAnalysis = new System.Windows.Forms.TabPage();
+            this.tabPageBuilds = new System.Windows.Forms.TabPage();
+            this.lblBuildsTitle = new System.Windows.Forms.Label();
+            this.rbBuildsTable = new System.Windows.Forms.RadioButton();
+            this.rbBuildsPopularity = new System.Windows.Forms.RadioButton();
+            this.btnRefreshBuilds = new System.Windows.Forms.Button();
+            this.dgvBuilds = new System.Windows.Forms.DataGridView();
+            this.dgvPopularity = new System.Windows.Forms.DataGridView();
             this.cmbComponentType = new System.Windows.Forms.ComboBox();
-            this.btnLoad = new System.Windows.Forms.Button();
             this.dgvCatalog = new System.Windows.Forms.DataGridView();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.panelBuild = new System.Windows.Forms.Panel();
             this.panelPrice = new System.Windows.Forms.Panel();
             this.lblCPU = new System.Windows.Forms.Label();
@@ -50,7 +55,6 @@
             this.chartDistribution = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.lblStatsTitle = new System.Windows.Forms.Label();
             this.grpStats = new System.Windows.Forms.GroupBox();
-            this.lblAvgPrice = new System.Windows.Forms.Label();
             this.lblMinPrice = new System.Windows.Forms.Label();
             this.lblMaxPrice = new System.Windows.Forms.Label();
             this.lblTotalItems = new System.Windows.Forms.Label();
@@ -67,17 +71,18 @@
             this.lblSearch = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.cmbFilterType = new System.Windows.Forms.ComboBox();
-            this.btnApplyFilter = new System.Windows.Forms.Button();
-            this.btnResetFilter = new System.Windows.Forms.Button();
 
             this.tabControl1.SuspendLayout();
             this.tabPageCatalog.SuspendLayout();
             this.tabPageBuild.SuspendLayout();
             this.tabPageAnalysis.SuspendLayout();
+            this.tabPageBuilds.SuspendLayout();
             this.grpStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCatalog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartPriceByCategory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartDistribution)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBuilds)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPopularity)).BeginInit();
             this.SuspendLayout();
 
             // tabControl1
@@ -87,6 +92,7 @@
             this.tabControl1.Controls.Add(this.tabPageCatalog);
             this.tabControl1.Controls.Add(this.tabPageBuild);
             this.tabControl1.Controls.Add(this.tabPageAnalysis);
+            this.tabControl1.Controls.Add(this.tabPageBuilds);
             this.tabControl1.Location = new System.Drawing.Point(10, 10);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -95,13 +101,10 @@
 
             // tabPageCatalog
             this.tabPageCatalog.Controls.Add(this.dgvCatalog);
-            this.tabPageCatalog.Controls.Add(this.btnLoad);
             this.tabPageCatalog.Controls.Add(this.cmbComponentType);
             this.tabPageCatalog.Controls.Add(this.lblSearch);
             this.tabPageCatalog.Controls.Add(this.txtSearch);
             this.tabPageCatalog.Controls.Add(this.cmbFilterType);
-            this.tabPageCatalog.Controls.Add(this.btnApplyFilter);
-            this.tabPageCatalog.Controls.Add(this.btnResetFilter);
             this.tabPageCatalog.Location = new System.Drawing.Point(4, 22);
             this.tabPageCatalog.Name = "tabPageCatalog";
             this.tabPageCatalog.Padding = new System.Windows.Forms.Padding(10);
@@ -140,20 +143,6 @@
             this.cmbComponentType.Name = "cmbComponentType";
             this.cmbComponentType.Size = new System.Drawing.Size(200, 24);
 
-            // btnLoad
-            this.btnLoad.BackColor = System.Drawing.Color.FromArgb(76, 175, 80);
-            this.btnLoad.FlatAppearance.BorderSize = 0;
-            this.btnLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnLoad.ForeColor = System.Drawing.Color.White;
-            this.btnLoad.Location = new System.Drawing.Point(220, 10);
-            this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(120, 30);
-            this.btnLoad.TabIndex = 1;
-            this.btnLoad.Text = "Загрузить";
-            this.btnLoad.UseVisualStyleBackColor = false;
-            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
-
             // dgvCatalog
             this.dgvCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
@@ -172,6 +161,10 @@
             this.dgvCatalog.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.dgvCatalog.RowHeadersVisible = false;
             this.dgvCatalog.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCatalog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCatalog.MultiSelect = false;
+            this.dgvCatalog.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(197, 224, 252);
+            this.dgvCatalog.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
 
             // Поиск и фильтрация
             this.lblSearch.AutoSize = true;
@@ -184,8 +177,6 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(200, 20);
             this.txtSearch.TabIndex = 4;
-            this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
-            this.txtSearch.Leave += new System.EventHandler(this.txtSearch_Leave);
 
             this.cmbFilterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFilterType.FormattingEnabled = true;
@@ -195,37 +186,6 @@
             this.cmbFilterType.Size = new System.Drawing.Size(150, 21);
             this.cmbFilterType.TabIndex = 5;
             this.cmbFilterType.SelectedIndex = 0;
-
-            this.btnApplyFilter.BackColor = System.Drawing.Color.FromArgb(33, 150, 243);
-            this.btnApplyFilter.FlatAppearance.BorderSize = 0;
-            this.btnApplyFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnApplyFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
-            this.btnApplyFilter.ForeColor = System.Drawing.Color.White;
-            this.btnApplyFilter.Location = new System.Drawing.Point(430, 45);
-            this.btnApplyFilter.Name = "btnApplyFilter";
-            this.btnApplyFilter.Size = new System.Drawing.Size(80, 25);
-            this.btnApplyFilter.TabIndex = 6;
-            this.btnApplyFilter.Text = "Применить";
-            this.btnApplyFilter.UseVisualStyleBackColor = false;
-            this.btnApplyFilter.Click += new System.EventHandler(this.btnApplyFilter_Click);
-
-            this.btnResetFilter.BackColor = System.Drawing.Color.FromArgb(158, 158, 158);
-            this.btnResetFilter.FlatAppearance.BorderSize = 0;
-            this.btnResetFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnResetFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
-            this.btnResetFilter.ForeColor = System.Drawing.Color.White;
-            this.btnResetFilter.Location = new System.Drawing.Point(520, 45);
-            this.btnResetFilter.Name = "btnResetFilter";
-            this.btnResetFilter.Size = new System.Drawing.Size(80, 25);
-            this.btnResetFilter.TabIndex = 7;
-            this.btnResetFilter.Text = "Сброс";
-            this.btnResetFilter.UseVisualStyleBackColor = false;
-            this.btnResetFilter.Click += new System.EventHandler(this.btnResetFilter_Click);
-
-            // statusStrip1
-            this.statusStrip1.Location = new System.Drawing.Point(0, 500);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(850, 22);
 
             // panelBuild
             this.panelBuild.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -433,7 +393,6 @@
             this.grpStats.Controls.Add(this.lblTotalItems);
             this.grpStats.Controls.Add(this.lblMaxPrice);
             this.grpStats.Controls.Add(this.lblMinPrice);
-            this.grpStats.Controls.Add(this.lblAvgPrice);
             this.grpStats.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.grpStats.Location = new System.Drawing.Point(10, 50);
             this.grpStats.Name = "grpStats";
@@ -442,29 +401,23 @@
             this.grpStats.TabStop = false;
             this.grpStats.Text = "  Общая статистика";
 
-            this.lblAvgPrice.AutoSize = true;
-            this.lblAvgPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.lblAvgPrice.Location = new System.Drawing.Point(10, 25);
-            this.lblAvgPrice.Name = "lblAvgPrice";
-            this.lblAvgPrice.Text = "Средняя цена по всем компонентам: —";
-
             this.lblMinPrice.AutoSize = true;
             this.lblMinPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.lblMinPrice.ForeColor = System.Drawing.Color.Green;
-            this.lblMinPrice.Location = new System.Drawing.Point(10, 45);
+            this.lblMinPrice.Location = new System.Drawing.Point(10, 25);
             this.lblMinPrice.Name = "lblMinPrice";
             this.lblMinPrice.Text = "Минимальная цена: —";
 
             this.lblMaxPrice.AutoSize = true;
             this.lblMaxPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.lblMaxPrice.ForeColor = System.Drawing.Color.Red;
-            this.lblMaxPrice.Location = new System.Drawing.Point(10, 65);
+            this.lblMaxPrice.Location = new System.Drawing.Point(10, 50);
             this.lblMaxPrice.Name = "lblMaxPrice";
             this.lblMaxPrice.Text = "Максимальная цена: —";
 
             this.lblTotalItems.AutoSize = true;
             this.lblTotalItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.lblTotalItems.Location = new System.Drawing.Point(10, 85);
+            this.lblTotalItems.Location = new System.Drawing.Point(10, 75);
             this.lblTotalItems.Name = "lblTotalItems";
             this.lblTotalItems.Text = "Всего компонентов в каталоге: —";
 
@@ -529,12 +482,111 @@
             this.chartDistribution.TabIndex = 2;
             this.chartDistribution.Text = "Количество компонентов по категориям";
 
+            // === ВКЛАДКА "АНАЛИЗ СБОРОК" ===
+
+            this.tabPageBuilds.Controls.Add(this.dgvPopularity);
+            this.tabPageBuilds.Controls.Add(this.dgvBuilds);
+            this.tabPageBuilds.Controls.Add(this.btnRefreshBuilds);
+            this.tabPageBuilds.Controls.Add(this.rbBuildsPopularity);
+            this.tabPageBuilds.Controls.Add(this.rbBuildsTable);
+            this.tabPageBuilds.Controls.Add(this.lblBuildsTitle);
+            this.tabPageBuilds.Location = new System.Drawing.Point(4, 22);
+            this.tabPageBuilds.Name = "tabPageBuilds";
+            this.tabPageBuilds.Padding = new System.Windows.Forms.Padding(10);
+            this.tabPageBuilds.Size = new System.Drawing.Size(822, 454);
+            this.tabPageBuilds.TabIndex = 3;
+            this.tabPageBuilds.Text = " Анализ сборок";
+
+            this.lblBuildsTitle.AutoSize = true;
+            this.lblBuildsTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.lblBuildsTitle.Location = new System.Drawing.Point(10, 10);
+            this.lblBuildsTitle.Name = "lblBuildsTitle";
+            this.lblBuildsTitle.Text = "🛠 Анализ сохранённых сборок";
+
+            this.rbBuildsTable.AutoSize = true;
+            this.rbBuildsTable.Checked = true;
+            this.rbBuildsTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.rbBuildsTable.Location = new System.Drawing.Point(12, 48);
+            this.rbBuildsTable.Name = "rbBuildsTable";
+            this.rbBuildsTable.Size = new System.Drawing.Size(120, 17);
+            this.rbBuildsTable.TabIndex = 1;
+            this.rbBuildsTable.TabStop = true;
+            this.rbBuildsTable.Text = "Таблица сборок";
+            this.rbBuildsTable.UseVisualStyleBackColor = true;
+            this.rbBuildsTable.CheckedChanged += new System.EventHandler(this.BuildsView_Changed);
+
+            this.rbBuildsPopularity.AutoSize = true;
+            this.rbBuildsPopularity.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.rbBuildsPopularity.Location = new System.Drawing.Point(170, 48);
+            this.rbBuildsPopularity.Name = "rbBuildsPopularity";
+            this.rbBuildsPopularity.Size = new System.Drawing.Size(180, 17);
+            this.rbBuildsPopularity.TabIndex = 2;
+            this.rbBuildsPopularity.Text = "Популярность компонентов";
+            this.rbBuildsPopularity.UseVisualStyleBackColor = true;
+
+            this.btnRefreshBuilds.BackColor = System.Drawing.Color.FromArgb(33, 150, 243);
+            this.btnRefreshBuilds.FlatAppearance.BorderSize = 0;
+            this.btnRefreshBuilds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefreshBuilds.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.btnRefreshBuilds.ForeColor = System.Drawing.Color.White;
+            this.btnRefreshBuilds.Location = new System.Drawing.Point(662, 42);
+            this.btnRefreshBuilds.Name = "btnRefreshBuilds";
+            this.btnRefreshBuilds.Size = new System.Drawing.Size(150, 30);
+            this.btnRefreshBuilds.TabIndex = 3;
+            this.btnRefreshBuilds.Text = "🔄 Обновить";
+            this.btnRefreshBuilds.UseVisualStyleBackColor = false;
+            this.btnRefreshBuilds.Click += new System.EventHandler(this.btnRefreshBuilds_Click);
+
+            this.dgvBuilds.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvBuilds.AllowUserToAddRows = false;
+            this.dgvBuilds.AllowUserToDeleteRows = false;
+            this.dgvBuilds.BackgroundColor = System.Drawing.Color.White;
+            this.dgvBuilds.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBuilds.Location = new System.Drawing.Point(10, 80);
+            this.dgvBuilds.Name = "dgvBuilds";
+            this.dgvBuilds.ReadOnly = true;
+            this.dgvBuilds.Size = new System.Drawing.Size(802, 360);
+            this.dgvBuilds.EnableHeadersVisualStyles = false;
+            this.dgvBuilds.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(66, 133, 244);
+            this.dgvBuilds.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
+            this.dgvBuilds.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.dgvBuilds.RowHeadersVisible = false;
+            this.dgvBuilds.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvBuilds.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvBuilds.MultiSelect = false;
+            this.dgvBuilds.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(197, 224, 252);
+            this.dgvBuilds.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+
+            this.dgvPopularity.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvPopularity.AllowUserToAddRows = false;
+            this.dgvPopularity.AllowUserToDeleteRows = false;
+            this.dgvPopularity.BackgroundColor = System.Drawing.Color.White;
+            this.dgvPopularity.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPopularity.Location = new System.Drawing.Point(10, 80);
+            this.dgvPopularity.Name = "dgvPopularity";
+            this.dgvPopularity.ReadOnly = true;
+            this.dgvPopularity.Size = new System.Drawing.Size(802, 360);
+            this.dgvPopularity.EnableHeadersVisualStyles = false;
+            this.dgvPopularity.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(66, 133, 244);
+            this.dgvPopularity.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
+            this.dgvPopularity.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.dgvPopularity.RowHeadersVisible = false;
+            this.dgvPopularity.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvPopularity.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPopularity.MultiSelect = false;
+            this.dgvPopularity.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(197, 224, 252);
+            this.dgvPopularity.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvPopularity.Visible = false;
+
             // Form1
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(850, 522);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
             this.MinimumSize = new System.Drawing.Size(850, 550);
             this.Name = "Form1";
@@ -546,11 +598,15 @@
             this.tabPageBuild.ResumeLayout(false);
             this.tabPageAnalysis.ResumeLayout(false);
             this.tabPageAnalysis.PerformLayout();
+            this.tabPageBuilds.ResumeLayout(false);
+            this.tabPageBuilds.PerformLayout();
             this.grpStats.ResumeLayout(false);
             this.grpStats.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCatalog)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartPriceByCategory)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartDistribution)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBuilds)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPopularity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -560,9 +616,7 @@
         private System.Windows.Forms.TabPage tabPageBuild;
         private System.Windows.Forms.TabPage tabPageAnalysis;
         private System.Windows.Forms.ComboBox cmbComponentType;
-        private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.DataGridView dgvCatalog;
-        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Panel panelBuild;
         private System.Windows.Forms.Panel panelPrice;
         private System.Windows.Forms.Label lblCPU;
@@ -589,15 +643,12 @@
         private System.Windows.Forms.Label lblSearch;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.ComboBox cmbFilterType;
-        private System.Windows.Forms.Button btnApplyFilter;
-        private System.Windows.Forms.Button btnResetFilter;
 
         // Анализ
         private System.Windows.Forms.DataVisualization.Charting.Chart chartPriceByCategory;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartDistribution;
         private System.Windows.Forms.Label lblStatsTitle;
         private System.Windows.Forms.GroupBox grpStats;
-        private System.Windows.Forms.Label lblAvgPrice;
         private System.Windows.Forms.Label lblMinPrice;
         private System.Windows.Forms.Label lblMaxPrice;
         private System.Windows.Forms.Label lblTotalItems;
@@ -609,5 +660,14 @@
         private System.Windows.Forms.Label lblAvgPSU;
         private System.Windows.Forms.Label lblAvgCase;
         private System.Windows.Forms.Button btnRefreshStats;
+
+        // Анализ сборок
+        private System.Windows.Forms.TabPage tabPageBuilds;
+        private System.Windows.Forms.Label lblBuildsTitle;
+        private System.Windows.Forms.RadioButton rbBuildsTable;
+        private System.Windows.Forms.RadioButton rbBuildsPopularity;
+        private System.Windows.Forms.Button btnRefreshBuilds;
+        private System.Windows.Forms.DataGridView dgvBuilds;
+        private System.Windows.Forms.DataGridView dgvPopularity;
     }
 }

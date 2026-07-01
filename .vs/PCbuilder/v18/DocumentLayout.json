@@ -1,0 +1,153 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|c:\\users\\admin\\onedrive\\documents\\github\\pc-builder\\pcbuilder\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|solutionrelative:pcbuilder\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|c:\\users\\admin\\onedrive\\documents\\github\\pc-builder\\pcbuilder\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|solutionrelative:pcbuilder\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|c:\\users\\admin\\onedrive\\documents\\github\\pc-builder\\pcbuilder\\form1.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|solutionrelative:pcbuilder\\form1.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|c:\\users\\admin\\onedrive\\documents\\github\\pc-builder\\pcbuilder\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|solutionrelative:pcbuilder\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|c:\\users\\admin\\onedrive\\documents\\github\\pc-builder\\pcbuilder\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|solutionrelative:pcbuilder\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|c:\\users\\admin\\onedrive\\documents\\github\\pc-builder\\pcbuilder\\services\\csvservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|solutionrelative:pcbuilder\\services\\csvservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|c:\\users\\admin\\onedrive\\documents\\github\\pc-builder\\pcbuilder\\services\\buildanalysisservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0CB5BAF-801A-4735-A67A-A61E91758C6D}|PCbuilder\\PCbuilder.csproj|solutionrelative:pcbuilder\\services\\buildanalysisservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Program.cs",
+              "RelativeDocumentMoniker": "PCbuilder\\Program.cs",
+              "ToolTip": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Program.cs",
+              "RelativeToolTip": "PCbuilder\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T08:17:29.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form1.resx",
+              "DocumentMoniker": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Form1.resx",
+              "RelativeDocumentMoniker": "PCbuilder\\Form1.resx",
+              "ToolTip": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Form1.resx",
+              "RelativeToolTip": "PCbuilder\\Form1.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2026-07-01T08:17:21.362Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "PCbuilder\\Form1.Designer.cs",
+              "ToolTip": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Form1.Designer.cs",
+              "RelativeToolTip": "PCbuilder\\Form1.Designer.cs",
+              "ViewState": "AgIAAIECAAAAAAAAAAAUwKACAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T08:16:56.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Form1.cs",
+              "RelativeDocumentMoniker": "PCbuilder\\Form1.cs",
+              "ToolTip": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Form1.cs",
+              "RelativeToolTip": "PCbuilder\\Form1.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAuwAwAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T08:15:39.603Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "DocumentMoniker": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Form1.cs",
+              "RelativeDocumentMoniker": "PCbuilder\\Form1.cs",
+              "ToolTip": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "RelativeToolTip": "PCbuilder\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T08:15:37.607Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CSVService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Services\\CSVService.cs",
+              "RelativeDocumentMoniker": "PCbuilder\\Services\\CSVService.cs",
+              "ToolTip": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Services\\CSVService.cs",
+              "RelativeToolTip": "PCbuilder\\Services\\CSVService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T08:14:30.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BuildAnalysisService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Services\\BuildAnalysisService.cs",
+              "RelativeDocumentMoniker": "PCbuilder\\Services\\BuildAnalysisService.cs",
+              "ToolTip": "C:\\Users\\Admin\\OneDrive\\Documents\\GitHub\\PC-Builder\\PCbuilder\\Services\\BuildAnalysisService.cs",
+              "RelativeToolTip": "PCbuilder\\Services\\BuildAnalysisService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T08:16:25.797Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
